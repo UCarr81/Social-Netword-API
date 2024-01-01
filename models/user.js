@@ -27,3 +27,29 @@ const userSchema = new Schema({
         },
     ],
     });
+
+
+/*
+    ### Models
+
+    **User**:       
+    
+    * `username`
+      * String
+      * Unique                               <- Done
+      * Required
+      * Trimmed
+    
+    * `email`
+      * String
+      * Required                            <- Done
+      * Unique
+      * Must match a valid email address (look into Mongoose's matching validation)
+    
+    * `thoughts`
+      * Array of `_id` values referencing the `Thought` model       <- Done
+    
+    * `friends`
+      * Array of `_id` values referencing the `User` model (self-reference)
+    
+    */
