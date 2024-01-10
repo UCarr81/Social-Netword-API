@@ -1,12 +1,10 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
+const apiRoutes = require('./api');
 
-const userRoutes = require('./userRoutes');
-const thoughtRoutes = require('./thoughtRoutes');
-const reactionRoutes = require('./reactionRoutes');
+router.use('/api', apiRoutes);
 
-router.use('/api/users', userRoutes);
-router.use('/api/thoughts', thoughtRoutes);
-router.use('/api/reactions', reactionRoutes);
+router.use((req, res) => {
+  res.status(404).send('<h1>Nope Thats Not it</h1>');
+});
 
 module.exports = router;
