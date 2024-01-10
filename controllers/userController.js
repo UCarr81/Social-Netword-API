@@ -1,5 +1,5 @@
 // ./controllers/userController.js
-const { User, Thought } = require('../models');
+const { User, Thoughts } = require('../models');
 
 const userController = {
   getAllUsers(req, res) {
@@ -69,7 +69,7 @@ const userController = {
         if (!user) {
           return res.status(404).json({ message: 'User not found.' });
         }
-        return Thought.deleteMany({ userId: user._id });
+        return Thoughts.deleteMany({ userId: user._id });
       })
       .then(() => res.json({ message: 'User and associated thoughts deleted.' }))
       .catch((err) => res.status(500).json(err));
@@ -102,4 +102,6 @@ const userController = {
   },
 };
 
+
+//Delete User
 module.exports = userController;

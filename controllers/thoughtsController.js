@@ -88,8 +88,8 @@ const thoughtsController = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  
-    createReaction(req, res) {
+
+    createReactions(req, res) {
       const { thoughtsId } = req.params;
       const { reactionBody, username } = req.body;
   
@@ -107,11 +107,11 @@ const thoughtsController = {
         .catch((err) => res.status(500).json(err));
     },
   
-    removeReaction(req, res) {
+    removeReactions(req, res) {
       const { thoughtsId, reactionId } = req.params;
   
       Thoughts.findByIdAndUpdate(
-        thoughtId,
+        thoughtsId,
         { $pull: { reactions: { _id: reactionId } } },
         { new: true }
       )

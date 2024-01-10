@@ -7,16 +7,29 @@ const {
   createThoughts, 
   updateThoughts,
   deleteThoughts,
- // addReaction,
- // removeReaction,
+  createReactions,
+  removeReactions,
 } = require('../../controllers/thoughtsController');
 
-router.get('/', getAllThoughts);
-router.get('/:thoughtsId', getThoughtsById);
-router.post('/', createThoughts); 
-router.put('/:thoughtsId', updateThoughts);
-router.delete('/:thoughtsId', deleteThoughts);
-//router.post('/:thoughtsId/reactions', addReaction);
-//router.delete('/:thoughtsId/reactions/:reactionId', removeReaction);
+router
+  .route('/')
+  .get(getAllThoughts)
+  .post(createThoughts);
+
+router
+.route('/:id')
+.get(getThoughtsById)
+.put(updateThoughts)
+.delete(deleteThoughts)
+
+router
+  .route('/:thoughtsId/reactions')
+  .post(createReactions)
+
+router
+  .route('/:thoughtsId/reactions/:reactionId')
+  .delete(removeReactions)
+
+// Thanks to Civ187 For this File Format Example! Much Easier to read
 
 module.exports = router;
