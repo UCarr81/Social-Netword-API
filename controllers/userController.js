@@ -13,7 +13,7 @@ const userController = {
         select: '-__v',
       })
       .select('-__v')
-      .then((users) => res.json(users))
+      .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
 
