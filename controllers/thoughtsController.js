@@ -42,11 +42,7 @@ const thoughtsController = {
         { new: true }
       );
   
-      if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
-      }
-  
-      res.json(user);
+      res.json({ user, thoughts }); 
     } catch (err) {
       res.status(500).json(err);
     }
@@ -55,6 +51,7 @@ const thoughtsController = {
   updateThoughts(req, res) {
     const { thoughtsId } = req.params;
     const { thoughtsText } = req.body;
+    console.log(req.params)
 
     Thoughts.findByIdAndUpdate(thoughtsId, { thoughtsText }, { new: true })
       .then((thoughts) => {
@@ -65,29 +62,32 @@ const thoughtsController = {
       })
       .catch((err) => res.status(500).json(err));
   },
-
-  deleteThoughts(req, res) {
-    const { thoughtsId } = req.params;
-
-    Thoughts.findByIdAndDelete(thoughtsId)
-      .then((thoughts) => {
-        if (!thoughts) {
-          return res.status(404).json({ message: 'Thoughts not found.' });
-        }
-        return User.findByIdAndUpdate(
-          thoughts.userId,
-          { $pull: { thoughts: thoughtsId } },
-          { new: true }
-        );
-      })
-      .then((user) => {
-        if (!user) {
-          return res.status(404).json({ message: 'User not found.' });
-        }
-        res.json({ message: 'Thoughts and associated user data updated.' });
-      })
-      .catch((err) => res.status(500).json(err));
+  deleteThoughts: async (req, res) => {
+    try {
+      const { thoughtsId } = req.params;
+  
+      const thoughts = await Thoughts.findByIdAndDelete(thoughtsId);
+  
+      if (!thoughts) {
+        return res.status(404).json({ message: 'Thoughts not found.' });
+      }
+  
+      const user = await Thoughts.findByIdAndUpdate(
+        thoughtsId,
+        { $pull: { thoughts: thoughtsId } },
+        { new: true }
+      );
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
+  
+      res.json({ message: 'Thoughts and associated user data updated.' });
+    } catch (err) {
+      res.status(500).json(err);
+    }
   },
+  
 
     createReactions(req, res) {
       const { thoughtsId } = req.params;
